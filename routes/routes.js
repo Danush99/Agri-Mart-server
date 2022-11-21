@@ -5,15 +5,15 @@ const {
     userVlidation,
     validateUserSignIn,
   } = require('../utils/mobileAppValidation');
-const adminCont = require('../controllers/adminController');
-const authController = require('../controllers/authController');
-const offCont = require('../controllers/officerController');
-const marketController = require('../controllers/marketController')
-const farmerController = require('../controllers/farmerController')
-const buyerController = require('../controllers/buyerController')
+const adminCont = require('../Controllers/adminController');
+const authController = require('../Controllers/authController');
+const offCont = require('../Controllers/officerController');
+const marketController = require('../Controllers/marketController')
+const farmerController = require('../Controllers/farmerController')
+const buyerController = require('../Controllers/buyerController')
 
-const verifyRoles = require('../middlewares/verifyRoles');
-const verifyJWT = require('../middlewares/verifyJWT');
+const verifyRoles = require('../Middlewares/verifyRoles');
+const verifyJWT = require('../Middlewares/verifyJWT');
 
 //WEB
 

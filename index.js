@@ -15,7 +15,7 @@ const port = process.env.PORT || 5000;
 // const cookieParser = require("cookie-parser");
 // // app.use(
 // //     cors({
-// //       origin: ["exp://192.168.43.113:19000"],
+// //       origin: ["exp:/test/192.168.43.113:19000"],
 // //       methods: ["GET", "POST"],
 // //       credentials: true,
 // //     })
