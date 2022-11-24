@@ -6,10 +6,6 @@ const SchemaOrder = new mongoose.Schema({
         type: String,
         required: [true, "itemId is Required"],
     },
-    buyerId: {
-        type: String,
-        required: [true, "buyerId is Required"],
-    },
     isDelivery: {
         type: String,
         required: [true, "isDelivery is not Required"],
@@ -26,13 +22,29 @@ const SchemaOrder = new mongoose.Schema({
         type: String,
         required: [false, "deliveryAddress is not Required"],
     },
-    farmerId: {
+    orderDate: {
         type: String,
-        required: [true, "farmerId is not Required"],
+        required: [true, "orderDate is not Required"],
+    },
+    CheckUncheck: {
+        type: String,
+        required: [false, "CheckUncheck is not Required"],
     },
     itemObject:{
         type: Object,
-        required: [true, "farmerId is not Required"],
+        required: [true, "itemObject is  Required"],
+    },
+    buyerObject:{
+        type: Object,
+        required: [true, "buyerObject is  Required"],
+    },
+    farmerObject:{
+        type: Object,
+        required: [true, "farmerObject is  Required"],
+    },
+    note:{
+        type: Object,
+        required: [true, "note is Required"],
     }
 });
 

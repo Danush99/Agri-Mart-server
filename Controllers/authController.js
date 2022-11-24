@@ -41,13 +41,9 @@ const handleLogin = async (req, res) => {
     const validation = validate.login_validation({ email, password });
     if (validation.error) {
         if(mobile){
-            return res.json({
-                "message": validation.error.details,"success":false
-            });
+            return res.json({"message": validation.error.details,"success":false,"NotApprove":false});
         }else{
-            return res.status(400).json({
-                "message": validation.error.details,"success":false
-            });
+            return res.status(400).json({"message": validation.error.details,"success":false,"NotApprove":false});
         }
     }
 
@@ -88,7 +84,7 @@ const handleLogin = async (req, res) => {
                 {"message": compareData.msg,"path": [compareData.status==402?"password":"email"]},
             ] })
         }else{
-            return  res.status(compareData.status).json({ "message": compareData.msg,"success":false})
+            return  res.status(compareData.status).json({ "message": compareData.msg,"success":false,"NotApprove":false})
         }
     }else{
         const auth = compareData.obj;
@@ -97,12 +93,34 @@ const handleLogin = async (req, res) => {
         const refresh_token = token.getRefreshToken(auth);
         res.cookie('jwt', refresh_token, { httpOnly: true, secure: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 });
         if(mobile){
+            const typeId = auth.typeId
+            const userType = auth.userType
+            var profile=""
+            if(userType=="farmer"){
+                profile = await Farmer.findOne( { _id: typeId });
+                if(profile.approval=="Accepted"){
+                    return res.json({
+                        "message": "Mobile Login successful",
+                        "access_token": access_token,
+                        "user_type":auth.userType,
+                        "user_Id":auth._id,
+                        "user":auth,
+                        "profile":profile,
+                        "success":true
+                    });
+                }else{
+                    return  res.json({ "message": [{"message": compareData.msg,"path": [compareData.status==402?"password":"email"]},] , "success":false,"NotApprove":true})
+                }
+            }else if(userType=="buyer"){
+                profile = await Buyer.findOne( { _id: typeId });
+            }
             return res.json({
                 "message": "Mobile Login successful",
                 "access_token": access_token,
                 "user_type":auth.userType,
                 "user_Id":auth._id,
                 "user":auth,
+                "profile":profile,
                 "success":true
             });
         }else{
@@ -205,14 +223,14 @@ const updateProfile = async (req,res)=>{
 }
 
 const getProfile = async (req,res)=>{
-    const {userType,typeId} = req.body
+    const userType = req.body.UserType
+    const typeId = req.body.TypeId
     //const {userType,typeId} = {"userType":"farmer","typeId":"633387f60ccdcbe5404f3690"}
     console.log("need backend data for. ",userType,typeId)
     if(userType=="farmer"){
         const farmer = await Farmer.findOne( { _id: typeId });
         // const farmer = await Farmer.updateOne( { _id:_id },{ $set:{officer:officer,approval:approval}, $currentDate: {lastModified:true}} )
         if(farmer){
-            console.log("here we go again: ",farmer)
             return res.json({ success: true, message: 'profile getting is success',user:farmer })
         }else{
             return res.json({ "message": "profile getting req failed",success: false })

@@ -52,10 +52,12 @@ router
     .post("/farmer/updateItem",farmerController.updateItem)
     .post("/farmer/updateItemImg",farmerController.updateItemImage)
     .post("/market/directBuy",marketController.directBuy)
-    .post("/market/bidOrder",marketController.bidOrder)
+    .post("/market/bidOnItem",marketController.bidOnItem)
+    .post("/market/getItemBidDetails",marketController.getItemBidDetails)
     .post("/buyer/getBuyer",buyerController.getBuyer)
     .post("/buyer/getFarmer",farmerController.getFarmer)
     .post("/market/orders",marketController.getOrders)
+    .post("/market/checkOrder",marketController.checkOrder)
 
     
 

@@ -13,6 +13,10 @@ const SchemaBidding = new mongoose.Schema({
     itemName: {
         type: String,
         required: [true, "itemName is Required"],
+    },    
+    isSold: {
+        type: String,
+        required: [false, "itemName is Required"],
     },
     buyers: [{
         type: String,
