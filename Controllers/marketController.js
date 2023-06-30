@@ -144,6 +144,36 @@ const getOrders = async (req,res)=>{
 
 }
 
+const GetOrderCompletePercentage = async (req,res)=>{
+    console.log("data",req.body)
+    const userId = req.body.userId;
+    const userType = req.body.userType;
+    if(userType=="buyer"){
+        const orders = await Order.find( {buyerId:userId} );
+        const CompOrder = await Order.find( {buyerId:userId,CheckUncheck:"true"} );
+        if(orders){
+            const orderCount = orders.length
+            const CompOrderCount = CompOrder.length
+            const cpm = CompOrderCount/orderCount
+            return res.json({ success: true, message: 'Orders get success',cpm:cpm });
+        }else{
+            return res.json({ success: false, message: 'Orders get fail' });
+        }
+    }else{
+        const orders = await Order.find( {farmerId:userId} );
+        const CompOrder = await Order.find( {farmerId:userId,CheckUncheck:"true"} );
+        if(orders){
+            const orderCount = orders.length
+            const CompOrderCount = CompOrder.length
+            const cpm = CompOrderCount/orderCount
+            return res.json({ success: true, message: 'Orders get success',cpm:cpm });
+        }else{
+            return res.json({ success: false, message: 'Orders get fail' });
+        }
+    }
+
+}
+
 const bidOnItem = async (req,res) =>{
     console.log("data",req.body)
     const item = req.body.item;
@@ -207,5 +237,6 @@ module.exports = {
     directBuy,
     getOrders,
     bidOnItem,
-    checkOrder
+    checkOrder,
+    GetOrderCompletePercentage
 }

@@ -58,8 +58,8 @@ router
     .post("/buyer/getFarmer",farmerController.getFarmer)
     .post("/market/orders",marketController.getOrders)
     .post("/market/checkOrder",marketController.checkOrder)
+    .post("/market/orderPercentage",marketController.GetOrderCompletePercentage)
 
-    
 
 module.exports = router;
 //officer/farmerVerify

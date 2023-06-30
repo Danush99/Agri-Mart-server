@@ -28,7 +28,7 @@ const port = process.env.PORT || 5000;
 
 
 app.get('/test', (req, res) => {
-    res.json({ success: true, message: 'Welcome to backend zone!',items:"items nane mahattayoo" });
+    res.json({ success: true, message: 'Welcome to backend zone!',items:"no items" });
 });
   
 app.get('/', (req, res) => {
